@@ -1,0 +1,28 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# Virtual Environment
+backend/venv/
+
+# Environment variables (secrets)
+.env
+backend/.env
+
+# pytest cache
+.pytest_cache/
+backend/.pytest_cache/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Docker volumes
+postgres_data/

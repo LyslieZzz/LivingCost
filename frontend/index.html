@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>城市生活成本查询 - 北京·上海·深圳·广州</title>
+  <meta name="description" content="查询和对比中国主要城市的生活成本，涵盖餐饮、购物、交通、居住等核心领域">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-bg"></div>
+    <div class="container hero-content">
+      <h1 class="hero-title">城市生活成本查询</h1>
+      <p class="hero-subtitle">查询和对比北京、上海、深圳、广州的真实生活开支</p>
+      <div class="city-selector">
+        <div class="selector-label">选择城市</div>
+        <div class="city-buttons" id="cityButtons">
+          <button class="city-btn active" data-city="beijing">
+            <span class="city-emoji">🏛️</span>
+            <span class="city-name">北京</span>
+          </button>
+          <button class="city-btn" data-city="shanghai">
+            <span class="city-emoji">🌆</span>
+            <span class="city-name">上海</span>
+          </button>
+          <button class="city-btn" data-city="shenzhen">
+            <span class="city-emoji">🏙️</span>
+            <span class="city-name">深圳</span>
+          </button>
+          <button class="city-btn" data-city="guangzhou">
+            <span class="city-emoji">🌺</span>
+            <span class="city-name">广州</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="summary-section" id="summarySection">
+      <div class="summary-cards">
+        <div class="summary-card">
+          <div class="summary-icon">👤</div>
+          <div class="summary-info">
+            <div class="summary-label">单人预估月支出</div>
+            <div class="summary-value" id="singleCost">--</div>
+          </div>
+        </div>
+        <div class="summary-card salary-card">
+          <div class="summary-icon">💵</div>
+          <div class="summary-info">
+            <div class="summary-label">税后平均月薪</div>
+            <div class="summary-value" id="avgSalary">--</div>
+          </div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-icon">📍</div>
+          <div class="summary-info">
+            <div class="summary-label">市中心定义</div>
+            <div class="summary-value center-def" id="centerDef">--</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="data-section" id="dataSection"></section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>数据仅供参考，实际价格因区域和时间有所波动</p>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

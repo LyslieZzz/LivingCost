@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: livingcost-api
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=mysql+pymysql://${MYSQL_USER:-livingcost}:${MYSQL_PASSWORD:-livingcost_pwd}@mysql:3306/${MYSQL_DATABASE:-livingcost}
+      - DEBUG=${DEBUG:-false}
+      - CORS_ORIGINS=${CORS_ORIGINS:-http://localhost:3000,http://localhost:8080}
+    depends_on:
+      mysql:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - livingcost-network
+
+  mysql:
+    image: mysql:8.0
+    container_name: livingcost-mysql
+    command: --default-authentication-plugin=mysql_native_password  
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-livingcost_root_pwd}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-livingcost}
+      - MYSQL_USER=${MYSQL_USER:-livingcost}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-livingcost_pwd}
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./database/seed.sql:/docker-entrypoint-initdb.d/02-seed.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-livingcost_root_pwd}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+    networks:
+      - livingcost-network
+
+volumes:
+  mysql-data:
+
+networks:
+  livingcost-network:
+    driver: bridge
